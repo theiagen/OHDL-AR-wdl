@@ -64,6 +64,7 @@ RUN mamba create -y --name odhl -c conda-forge -c bioconda -c defaults \
 
 # Install additional Python packages for Phoenix
 SHELL ["conda", "run", "-n", "odhl", "/bin/bash", "-c"]
+
 # Install fastqc first (usually has fewer dependencies)
 RUN mamba install -y -c bioconda fastqc=0.12.1 && conda clean -a
 
