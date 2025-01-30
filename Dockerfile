@@ -11,6 +11,8 @@ LABEL maintainer2="Andrew Hale"
 LABEL maintainer.email="michal.babinski@theiagen.com"
 LABEL maintainer2.email="andrew.hale@theiagen.com"
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bzip2 \
     ca-certificates \
@@ -18,9 +20,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     procps \
     unzip \
-    wget && \
-    apt-get autoclean && \
-    rm -rf /var/lib/apt /var/lib/dpkg /var/lib/cache /var/lib/log
+    wget \
+    apt-transport-https \
+    gnupg-agent \
+    software-properties-common && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://get.docker.com | sh
 
 # Copy the ODHL_AR directory
 COPY . /ODHL_AR
@@ -29,6 +36,8 @@ COPY . /ODHL_AR
 RUN mamba create -y --name odhl -c conda-forge -c bioconda -c defaults \
     python=3.9 \
     nextflow=24.10.4 \
+    pandas \
+    biopython \
     && mamba clean -a -y
 
 # Activate conda env
