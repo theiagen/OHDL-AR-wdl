@@ -100,5 +100,6 @@ task arAnalysis {
         disks: "local-disk ~{disk_size} SSD"
         maxRetries: 3
         preemptible: 0
+        docker_mounts: "/var/run/docker.sock:/var/run/docker.sock"
     }
 }
