@@ -60,7 +60,7 @@ task arAnalysis {
 
 
         # Launch nextflow pipeline with massive inputs
-        nextflow run /ODHL_AR/main.nf \
+        nextflow -q run /ODHL_AR/main.nf \
             -entry arANALYSIS \
             --projectID ~{projectID} \
             --input sample_sheet.csv \
