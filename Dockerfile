@@ -82,6 +82,7 @@ RUN mamba install -y -c bioconda -c conda-forge \
     kraken2 \
     prokka \
     quast \
+    samtools \
     && conda clean -a
 
 RUN pip install \
@@ -113,16 +114,6 @@ RUN wget https://github.com/tseemann/mlst/archive/v${MLST_VER}.tar.gz && \
 
 # Add MLST to PATH
 ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/mlst-${MLST_VER}/bin:${PATH}"
-
-RUN wget --progress=dot:giga https://github.com/samtools/samtools/releases/download/${SAMTOOLSVER}/samtools-${SAMTOOLSVER}.tar.bz2 && \
-    tar -xjf samtools-${SAMTOOLSVER}.tar.bz2 && \
-    rm samtools-${SAMTOOLSVER}.tar.bz2
-
-WORKDIR /opt/samtools-${SAMTOOLSVER}
-RUN ./configure && \
-    make && \
-    make install
-WORKDIR /opt
 
 # Download and install sambamba
 RUN wget --progress=dot:giga https://github.com/biod/sambamba/releases/download/v${SAMBAMBAVER}/sambamba-${SAMBAMBAVER}-linux-amd64-static.gz && \
