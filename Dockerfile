@@ -83,6 +83,7 @@ RUN mamba install -y -c bioconda -c conda-forge \
     prokka \
     quast \
     samtools \
+    nextflow \
     && conda clean -a
 
 RUN pip install \
@@ -115,6 +116,7 @@ RUN wget https://github.com/tseemann/mlst/archive/v${MLST_VER}.tar.gz && \
 # Add MLST to PATH
 ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/mlst-${MLST_VER}/bin:${PATH}"
 
+WORKDIR /opt
 # Download and install sambamba
 RUN wget --progress=dot:giga https://github.com/biod/sambamba/releases/download/v${SAMBAMBAVER}/sambamba-${SAMBAMBAVER}-linux-amd64-static.gz && \
     gzip -d sambamba-${SAMBAMBAVER}-linux-amd64-static.gz && \
@@ -128,6 +130,8 @@ RUN wget --progress=dot:giga https://sourceforge.net/projects/bbmap/files/BBMap_
     rm BBMap_${BBTOOLSVER}.tar.gz && \
     ln -s /opt/bbmap/*.sh /usr/local/bin/
 
+WORKDIR /data
+
 RUN conda init bash
 RUN echo "conda activate odhl" >> ~/.bashrc
 
@@ -138,7 +142,5 @@ ENV PATH=$CONDA_PREFIX/bin:$PATH
 COPY . /ODHL_AR
 
 RUN chmod +x /ODHL_AR/main.nf
-
-WORKDIR /data
 
 CMD ["/bin/bash"]
