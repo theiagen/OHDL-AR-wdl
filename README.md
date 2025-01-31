@@ -1,2 +1,2 @@
-# OHDL-AR-wdl
-OHDL_AR Workflow wrapped in WDL
+# ODHL-AR-wdl
+ODHL_AR Workflow wrapped in WDL
