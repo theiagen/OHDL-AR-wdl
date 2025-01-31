@@ -9,23 +9,23 @@ task arAnalysis {
         Array[File] fastq_1
         Array[File] fastq_2
         # Database files
-        File kraken2_db
-        File zipped_sketch
-        File custom_mlstdb
-        File bbdukdb
-        File nodes
-        File names
-        File hvgamdb
-        File ardb
-        File gamdbpf
-        File amrfinder_db
-        File ncbi_assembly_stats
-        File ncbi_db
-        File labResults
-        File metadata_NCBI
-        File ncbi_post
-        File wgs_db
-        File core_functions_script
+        File kraken2_db = "gs://theiagen-public-files/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
+        File zipped_sketch = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/REFSEQ_20240124_Bacteria_complete.msh.gz"
+        File custom_mlstdb = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/mlst_db_20240124.tar.gz"
+        File bbdukdb = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/phiX.fasta"
+        File nodes = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/nodes_20240129.dmp.gz"
+        File names = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/names_20240129.dmp.gz"
+        File hvgamdb = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/HyperVirulence_20220414.fasta"
+        File ardb = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/ResGANNCBI_20240131_srst2.fasta"
+        File gamdbpf = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/PF-Replicons_20240124.fasta"
+        File amrfinder_db = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/amrfinderdb_v3.12_20240131.1.tar.gz"
+        File ncbi_assembly_stats = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/NCBI_Assembly_stats_20240124.txt"
+        File ncbi_db = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/ncbiDB/srr_db_example.csv"
+        File labResults = "gs://theiagen-public-files/terra/ODHL_AR/test/labResults_test.csv"
+        File metadata_NCBI = "gs://theiagen-public-files/terra/ODHL_AR/test/metaData_NCBI.csv"
+        File ncbi_post = "gs://theiagen-public-files/terra/ODHL_AR/test/ncbi_post.txt"
+        File wgs_db = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/wgsDB/wgs_db_example.csv"
+        File core_functions_script = "gs://theiagen-public-files/terra/ODHL_AR/bin/core_functions.sh"
         # Pipeline parameters
         Boolean save_trimmed_fail = true
         Boolean saved_merged = true
@@ -33,7 +33,7 @@ task arAnalysis {
         Int minlength = 500       
         String outdir = "OUT"
         # Runtime parameters
-        String docker = "odhl-pipeline:dev004"
+        String docker = "odhl-pipeline:dev0004"
         Int memory = 64
         Int cpu = 32
         Int disk_size = 100

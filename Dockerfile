@@ -28,7 +28,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libjson-perl \
     gzip \
     file \
-    ncbi-blast+ \
     build-essential \
     libbz2-dev \
     liblzma-dev \
@@ -75,7 +74,7 @@ RUN mamba install -y -c bioconda fastani=1.34 && conda clean -a
 RUN mamba install -y -c bioconda spades=3.15 && conda clean -a
 
 # Try AMRFinderPlus with a more flexible version
-RUN mamba install -y -c bioconda ncbi-amrfinderplus && conda clean -a
+RUN mamba install -y -c bioconda ncbi-amrfinderplus=3.12.8 && conda clean -a
 
 # And fastp
 RUN mamba install -y -c bioconda fastp=0.24 && conda clean -a
@@ -85,6 +84,13 @@ RUN mamba install -y -c bioconda mash && conda clean -a
 
 # Gamma
 RUN mamba install -y -c bioconda gamma && conda clean -a
+
+# Bioconda install of mlst
+RUN mamba install -y -c bioconda mlst=2.23.0 && conda clean -a
+
+# We need this specific version of blast
+RUN mamba install -y -c bioconda blast=2.14.1 && conda clean -a
+
 # Install remaining tools
 RUN mamba install -y -c bioconda -c conda-forge \
     kraken2 \
@@ -105,20 +111,11 @@ RUN pip install \
     pytest-shutil \
     pyre2
 
-# Install any2fasta
-RUN wget https://github.com/tseemann/any2fasta/archive/refs/tags/v${ANY2FASTA_VER}.tar.gz \
-    && tar xzf v${ANY2FASTA_VER}.tar.gz \
-    && rm v${ANY2FASTA_VER}.tar.gz \
-    && chmod +x any2fasta-${ANY2FASTA_VER}/any2fasta \
-    && mv -v any2fasta-${ANY2FASTA_VER}/any2fasta /usr/local/bin
-
 # Install MLST and set up database
 RUN wget https://github.com/tseemann/mlst/archive/v${MLST_VER}.tar.gz && \
     tar -xzf v${MLST_VER}.tar.gz && \
     rm v${MLST_VER}.tar.gz && \
     cd /mlst-${MLST_VER} && \
-    wget -O - https://github.com/tseemann/mlst/archive/v${MLST_VER}.tar.gz | \
-    tar xzf - --strip-components=2 mlst-${MLST_VER}/db && \
     chmod 755 --recursive db/*
 
 # Add MLST to PATH
