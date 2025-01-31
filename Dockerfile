@@ -77,6 +77,14 @@ RUN mamba install -y -c bioconda spades=3.15 && conda clean -a
 # Try AMRFinderPlus with a more flexible version
 RUN mamba install -y -c bioconda ncbi-amrfinderplus && conda clean -a
 
+# And fastp
+RUN mamba install -y -c bioconda fastp=0.24 && conda clean -a
+
+# And mash
+RUN mamba install -y -c bioconda mash && conda clean -a
+
+# Gamma
+RUN mamba install -y -c bioconda gamma && conda clean -a
 # Install remaining tools
 RUN mamba install -y -c bioconda -c conda-forge \
     kraken2 \

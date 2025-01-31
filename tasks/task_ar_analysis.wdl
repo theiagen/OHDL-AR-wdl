@@ -33,9 +33,9 @@ task arAnalysis {
         Int minlength = 500       
         String outdir = "OUT"
         # Runtime parameters
-        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/odhl-pipeline:dev2"
-        Int memory = 32
-        Int cpu = 16
+        String docker = "odhl-pipeline:dev04"
+        Int memory = 64
+        Int cpu = 32
         Int disk_size = 100
     }
 
@@ -100,6 +100,5 @@ task arAnalysis {
         disks: "local-disk ~{disk_size} SSD"
         maxRetries: 3
         preemptible: 0
-        docker_mounts: "/var/run/docker.sock:/var/run/docker.sock"
     }
 }
