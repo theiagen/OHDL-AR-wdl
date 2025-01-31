@@ -14,23 +14,23 @@ workflow ar_analysis_wf {
         Array[File] fastq_1
         Array[File] fastq_2
         # Database files
-        File kraken2_db
-        File zipped_sketch
-        File custom_mlstdb
-        File bbdukdb
-        File nodes
-        File names
-        File hvgamdb
-        File ardb
-        File gamdbpf
-        File amrfinder_db
-        File ncbi_assembly_stats
-        File ncbi_db
-        File labResults
-        File metadata_NCBI
-        File ncbi_post
-        File wgs_db
-        File core_functions_script
+        File? kraken2_db
+        File? zipped_sketch
+        File? custom_mlstdb
+        File? bbdukdb
+        File? nodes
+        File? names
+        File? hvgamdb
+        File? ardb
+        File? gamdbpf
+        File? amrfinder_db
+        File? ncbi_assembly_stats
+        File? ncbi_db
+        File? labResults
+        File? metadata_NCBI
+        File? ncbi_post
+        File? wgs_db
+        File? core_functions_script
         # Optional pipeline parameters
         Boolean? save_trimmed_fail
         Boolean? saved_merged
@@ -70,5 +70,8 @@ workflow ar_analysis_wf {
     output {
         String ar_analysis_docker = arAnalysis.ar_analysis_docker
         String analysis_date = arAnalysis.analysis_date
+        File pipeline_results = arAnalysis.pipeline_results
+        File quality_results = arAnalysis.quality_results
+        File phoenix_summary = arAnalysis.phoenix_summary
     }
 }

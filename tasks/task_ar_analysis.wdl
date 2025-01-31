@@ -91,6 +91,9 @@ task arAnalysis {
     output {
         String analysis_date = read_string("DATE")
         String ar_analysis_docker = docker
+        File pipeline_results = "~{outdir}/post/pipeline_results.csv"
+        File quality_results = "~{outdir}/post/quality_results.csv"
+        File phoenix_summary = "~{outdir}/create/Phoenix_Summary.tsv"
     }
 
     runtime {
