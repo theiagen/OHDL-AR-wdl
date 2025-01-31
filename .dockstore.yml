@@ -1,0 +1,7 @@
+version: 1.0
+workflows:
+ - name: ODHL-AR-Pipeline
+   subclass: WDL
+   primaryDescriptorPath: /workflows/arAnalysis.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
