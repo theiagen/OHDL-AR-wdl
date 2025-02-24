@@ -5,9 +5,9 @@ task arAnalysis {
         #Necessary information
         String projectID 
         # Sample information to create csv
-        Array[String] samplenames
-        Array[File] fastq_1
-        Array[File] fastq_2
+        String samplename
+        File fastq_1
+        File fastq_2
         # Database files
         File kraken2_db = "gs://theiagen-public-files/terra/theiaprok-files/k2_standard_8gb_20210517.tar.gz"
         File zipped_sketch = "gs://theiagen-public-files/terra/ODHL_AR/assets/databases/REFSEQ_20240124_Bacteria_complete.msh.gz"
@@ -33,7 +33,7 @@ task arAnalysis {
         Int minlength = 500       
         String outdir = "OUT"
         # Runtime parameters
-        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/odhl-pipeline:0.2"
+        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/odhl-pipeline:0.3"
         Int memory = 32
         Int cpu = 16
         Int disk_size = 100
@@ -46,18 +46,12 @@ task arAnalysis {
 
         # We need to create the samplesheet 
         echo "sample,fastq_1,fastq_2" > sample_sheet.csv
-        read1_array=(~{sep=' ' fastq_1})
-        read2_array=(~{sep=' ' fastq_2})
-        sample_array=(~{sep=' ' samplenames})
         
-        for i in ${!sample_array[@]}; do
-            if [[ -z "${read2_array[$i]}" ]]; then
-                echo "${sample_array[$i]},${read1_array[$i]}," >> sample_sheet.csv
-            else
-                echo "${sample_array[$i]},${read1_array[$i]},${read2_array[$i]}" >> sample_sheet.csv
-            fi
-        done
-
+        if [[ -z ~{fastq_2} ]]; then
+            echo "~{samplename},~{fastq_1}," >> sample_sheet.csv
+        else
+            echo "~{samplename},~{fastq_1},~{fastq_2}" >> sample_sheet.csv
+        fi
 
         # Launch nextflow pipeline with massive inputs
         nextflow -q run /ODHL_AR/main.nf \
@@ -76,24 +70,23 @@ task arAnalysis {
             --amrfinder_db ~{amrfinder_db} \
             --ncbi_assembly_stats ~{ncbi_assembly_stats} \
             --ncbi_db ~{ncbi_db} \
-            --labResults ~{labResults} \
-            --metadata_NCBI ~{metadata_NCBI} \
-            --ncbi_post ~{ncbi_post} \
-            --wgs_db ~{wgs_db} \
-            --core_functions_script ~{core_functions_script} \
+            --outdir ~{outdir} \
+            --labResults ~{labResults}\
+            --metadata_NCBI ~{metadata_NCBI}\
+            --ncbi_post ~{ncbi_post}\
+            --wgs_db ~{wgs_db}\
+            --core_functions_script ~{core_functions_script}\
             --save_trimmed_fail ~{save_trimmed_fail} \
             --saved_merged ~{saved_merged} \
             --coverage ~{coverage} \
-            --minlength ~{minlength} \
-            --outdir ~{outdir}
+            --minlength ~{minlength}
+        
     >>>
 
     output {
         String analysis_date = read_string("DATE")
         String ar_analysis_docker = docker
-        File pipeline_results = "~{outdir}/post/pipeline_results.csv"
-        File quality_results = "~{outdir}/post/quality_results.csv"
-        File phoenix_summary = "~{outdir}/create/Phoenix_Summary.tsv"
+        File summary_results = "~{outdir}/create_phoenix_summary_line/~{samplename}_summaryline.tsv"
     }
 
     runtime {
