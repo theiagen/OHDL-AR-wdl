@@ -33,7 +33,7 @@ task arAnalysis {
         Int minlength = 500       
         String outdir = "OUT"
         # Runtime parameters
-        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/odhl-pipeline:0.3"
+        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/odhl-pipeline:0.4"
         Int memory = 32
         Int cpu = 16
         Int disk_size = 100
