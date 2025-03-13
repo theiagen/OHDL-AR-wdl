@@ -87,6 +87,8 @@ task arAnalysis {
         String analysis_date = read_string("DATE")
         String ar_analysis_docker = docker
         File summary_results = "~{outdir}/create_phoenix_summary_line/~{samplename}_summaryline.tsv"
+        File trimmed_counts = "~{outdir}/get_trimd_stats/~{samplename}_trimmed_read_counts.txt"
+        File synopsis = "~{outdir}/generate_pipeline_stats/~{samplename}.synopsis"
     }
 
     runtime {

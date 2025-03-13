@@ -71,5 +71,7 @@ workflow ar_analysis_wf {
         String ar_analysis_docker = arAnalysis.ar_analysis_docker
         String analysis_date = arAnalysis.analysis_date
         File summary_results = arAnalysis.summary_results
+        File trimmed_counts = arAnalysis.trimmed_counts
+        File synopsis = arAnalysis.synopsis
     }
 }
