@@ -10,9 +10,9 @@ workflow ar_analysis_wf {
         # Project information
         String projectID
         # Sample information
-        Array[String] samplenames
-        Array[File] fastq_1
-        Array[File] fastq_2
+        String samplename
+        File fastq_1
+        File fastq_2
         # Database files
         File? kraken2_db
         File? zipped_sketch
@@ -41,7 +41,7 @@ workflow ar_analysis_wf {
     call ar_analysis.arAnalysis {
         input:
             projectID = projectID,
-            samplenames = samplenames,
+            samplename = samplename,
             fastq_1 = fastq_1,
             fastq_2 = fastq_2,
             kraken2_db = kraken2_db,
@@ -70,8 +70,8 @@ workflow ar_analysis_wf {
     output {
         String ar_analysis_docker = arAnalysis.ar_analysis_docker
         String analysis_date = arAnalysis.analysis_date
-        File pipeline_results = arAnalysis.pipeline_results
-        File quality_results = arAnalysis.quality_results
-        File phoenix_summary = arAnalysis.phoenix_summary
+        File summary_results = arAnalysis.summary_results
+        File trimmed_counts = arAnalysis.trimmed_counts
+        File synopsis = arAnalysis.synopsis
     }
 }
