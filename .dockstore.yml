@@ -6,7 +6,7 @@ workflows:
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: ODHL-AR-Formatter
-    subclass: WDL
-    primaryDescriptorPath: /workflows/arFormatter.wdl
-    testParameterFiles:
-      - /tests/inputs/empty.json
+   subclass: WDL
+   primaryDescriptorPath: /workflows/arFormatter.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
