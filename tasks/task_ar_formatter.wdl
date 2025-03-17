@@ -6,7 +6,7 @@ task arFormatter {
         Array[File] synopsis_files
         Array[File] trimmed_count_files
         File labResults
-        String docker = "odhl-utilities:0.1"
+        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/odhl-pipeline:utils-0.1"
         Int memory = 16
         Int cpu = 4
         Int disk_size = 100
